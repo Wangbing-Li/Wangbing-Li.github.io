@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Academic Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/about')
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('#about').innerHTML = `
+                        <h2>About Me</h2>
+                        <p>Welcome to my academic website! I am ${data.name}, a researcher focusing on ${data.field}. ${data.description}</p>
+                    `;
+                });
+
+            fetch('/publications')
+                .then(response => response.json())
+                .then(data => {
+                    const pubList = document.querySelector('#publications ul');
+                    data.forEach(pub => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>${pub.title}</strong> - Published in ${pub.journal}, ${pub.year}. <a href="${pub.link}">Read more</a>`;
+                        pubList.appendChild(li);
+                    });
+                });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Your Name</h1>
+        <p>Researcher in [Your Field]</p>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Welcome to my academic website! I am [Your Name], a researcher focusing on [Your Research Areas]. My work involves [brief description of your work]. I am passionate about exploring [specific interests].</p>
+        <img src="your_photo.jpg" alt="Your Photo" class="profile-photo">
+    </section>
+
+    <section id="research">
+        <h2>Research Interests</h2>
+        <p>My research primarily focuses on [Research Topic 1], [Research Topic 2], and [Research Topic 3]. I am particularly interested in [briefly describe key interests or projects].</p>
+    </section>
+
+    <section id="publications">
+        <h2>Publications</h2>
+        <ul>
+            <!-- Publications will be dynamically loaded here -->
+        </ul>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>If you'd like to get in touch, please reach out via email at <a href="mailto:your_email@example.com">your_email@example.com</a> or connect with me on [LinkedIn/Twitter/etc.].</p>
+    </section>
+
+    <footer>
+        <p>&copy; [Year] [Your Name]. All rights reserved.</p>
+    </footer>
+</body>
+</html>
